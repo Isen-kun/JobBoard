@@ -1,22 +1,26 @@
-import React, { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import AppRoutes from './AppRoutes';
-import { Layout } from './components/Layout';
-import './custom.css';
+import React, { Component } from "react";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Home from "./Components/Home";
+import NavBar from "./Components/NavBar";
+import LandingPage from "./Components/LandingPage";
+// import AppRoutes from './AppRoutes';
+// import { Layout } from './components/Layout';
+// import "./custom.css";
 
 export default class App extends Component {
   static displayName = App.name;
 
   render() {
     return (
-      <Layout>
-        <Routes>
-          {AppRoutes.map((route, index) => {
-            const { element, ...rest } = route;
-            return <Route key={index} {...rest} element={element} />;
-          })}
-        </Routes>
-      </Layout>
+      <BrowserRouter>
+        <header>{/* <NavBar /> */}</header>
+        <main>
+          <Routes>
+            <Route index element={<LandingPage />} />
+            <Route path="home" element={<Home />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
     );
   }
 }
