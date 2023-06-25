@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Home from "./Components/Home";
-import NavBar from "./Components/NavBar";
-import LandingPage from "./Components/LandingPage";
-// import AppRoutes from './AppRoutes';
-// import { Layout } from './components/Layout';
-// import "./custom.css";
+import NavBar from "./Components/Navbar/NavBar";
+import Landing from "./pages/Landing";
+import Home from "./pages/Home";
+import Jobs from "./pages/Jobs";
+import Applications from "./pages/Applications";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -13,11 +12,13 @@ export default class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <header>{/* <NavBar /> */}</header>
+        <header>{true && <NavBar />}</header>
         <main>
           <Routes>
-            <Route index element={<LandingPage />} />
+            <Route index element={<Landing />} />
             <Route path="home" element={<Home />} />
+            <Route path="jobs" element={<Jobs />} />
+            <Route path="applications" element={<Applications />} />
           </Routes>
         </main>
       </BrowserRouter>

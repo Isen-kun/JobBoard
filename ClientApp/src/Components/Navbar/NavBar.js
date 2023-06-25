@@ -14,8 +14,10 @@ import {
   NavbarText,
   Button,
 } from "reactstrap";
-
 import { NavLink } from "react-router-dom";
+import NavApplicant from "./NavApplicant";
+import NavEmployer from "./NavEmployer";
+import LogoutAll from "../Register-Login/LogoutAll";
 
 const NavBar = (args) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,25 +28,17 @@ const NavBar = (args) => {
     <div>
       <Navbar expand="md" container="fluid" color="dark" dark>
         <NavbarBrand>
-          <NavLink to="/" className="navbar-brand">
+          <NavLink to="/home" className="navbar-brand">
             Job Board
           </NavLink>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
-            <NavItem>
-              <NavLink className="nav-link" to="/about">
-                Link 1
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="nav-link" to="/">
-                Link 2
-              </NavLink>
-            </NavItem>
+            {true && <NavApplicant />}
+            {false && <NavEmployer />}
           </Nav>
-          <NavbarText>User</NavbarText>
+          <NavbarText>{true && <LogoutAll />}</NavbarText>
         </Collapse>
       </Navbar>
     </div>
