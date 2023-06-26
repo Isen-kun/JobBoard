@@ -14,12 +14,14 @@ const Home = () => {
 
   return (
     <Container>
-      <h2 className="text-center p-3">Home Page</h2>
-      <ApplicantDashboard
-        user={dummyUser}
-        totalApplications={totalApplications}
-        totalSelectedApplications={totalSelectedApplications}
-      />
+      {/* <h2 className="text-center p-3">Home Page</h2> */}
+      <div className="pt-4">
+        <ApplicantDashboard
+          user={dummyUser}
+          totalApplications={totalApplications}
+          totalSelectedApplications={totalSelectedApplications}
+        />
+      </div>
     </Container>
   );
 };

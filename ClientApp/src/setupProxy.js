@@ -7,7 +7,7 @@ const target = env.ASPNETCORE_HTTPS_PORT
   ? env.ASPNETCORE_URLS.split(";")[0]
   : "http://localhost:55673";
 
-const context = ["/api/Roles"];
+const context = ["/api/Roles", "/api/Users"];
 
 const onError = (err, req, resp, target) => {
   console.error(`${err.message}`);

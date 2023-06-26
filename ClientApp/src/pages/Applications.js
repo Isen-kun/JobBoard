@@ -5,8 +5,8 @@ import { Container } from "reactstrap";
 const Applications = () => {
   return (
     <Container fluid>
-      <h3 className="text-center pt-3">Applications page</h3>
-      <div className="p-3">
+      {/* <h3 className="text-center pt-3">Applications page</h3> */}
+      <div className="p-4">
         {true && <ApplicationsApplicant />}
         {false && <ApplicationsEmployer />}
       </div>

@@ -24,7 +24,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<UsersController>
         [HttpGet]
-        [Authorize(Policy = "admin")]
+        //[Authorize(Policy = "admin")]
         public IEnumerable<User> GetAllUsers()
         {
             return _dbContext.Users;
@@ -101,29 +101,8 @@ namespace JobBoard.Controllers
                 signingCredentials: credentials);
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-            return Ok(jwt);
+            //return Ok(jwt);
+            return Ok(new { token = jwt, user = new { currentUser.Id,currentUser.Name, currentUser.Email, roleName } });
         }
-
-        //[HttpPost("[action]")]
-        //public IActionResult Logout()
-        //{
-        //    // Invalidate the token by setting its expiration time to a past date/time
-        //    var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    var jwtHandler = new JwtSecurityTokenHandler();
-        //    var jwtToken = jwtHandler.ReadToken(token) as JwtSecurityToken;
-
-        //    var expiredToken = new JwtSecurityToken(
-        //    _config["JWT:Issuer"],
-        //    _config["JWT:Audience"],
-        //    jwtToken.Claims,
-        //    DateTime.Now,
-        //    DateTime.Now.AddMinutes(-60),  // Expired token with negative expiration time
-        //    jwtToken.SigningCredentials
-        //    );
-
-        //    var newToken = jwtHandler.WriteToken(expiredToken);
-
-        //    return Ok("Logout successful");
-        //}
     }
 }

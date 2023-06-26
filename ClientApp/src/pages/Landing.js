@@ -7,7 +7,7 @@ const Landing = () => {
   return (
     <div className="landing-page">
       <Container>
-        <Row className="text-center p-5">
+        <Row className="text-center p-4">
           <Col md={12}>
             <h1>Welcome to the Job Board</h1>
             <h6>Making Tech Hiring simpler and effective</h6>

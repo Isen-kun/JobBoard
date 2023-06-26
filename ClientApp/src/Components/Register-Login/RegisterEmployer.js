@@ -30,7 +30,9 @@ const RegisterEmployer = () => {
           placeholder="Re-enter your password"
         />
       </FormGroup>
-      <Button color="secondary">Register</Button>
+      <Button color="secondary" outline>
+        Register
+      </Button>
     </Form>
   );
 };
