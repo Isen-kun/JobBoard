@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const { setCurrentUser, setLoading } = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -18,6 +22,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const user = {
       email,
@@ -42,11 +47,15 @@ const Login = () => {
       })
       .then((data) => {
         console.log(data);
+        setCurrentUser(data.user);
+        setLoading(false);
+
         // Save the token in local storage
         // localStorage.setItem("token", data.token);
         window.alert("Login successful!");
-        //window.location.reload();
+
         // Redirect to /home
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error);
@@ -66,6 +75,7 @@ const Login = () => {
           name="loginEmail"
           id="loginEmail"
           placeholder="Enter your email"
+          value={email}
           onChange={handleOnChange}
         />
       </FormGroup>
@@ -76,6 +86,7 @@ const Login = () => {
           name="loginPassword"
           id="loginPassword"
           placeholder="Enter your password"
+          value={password}
           onChange={handleOnChange}
         />
       </FormGroup>

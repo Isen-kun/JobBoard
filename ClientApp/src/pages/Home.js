@@ -1,23 +1,29 @@
 import { Container } from "reactstrap";
 import ApplicantDashboard from "../Components/Dashboard/ApplicantDashboard";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Home = () => {
-  const dummyUser = {
-    Id: 1,
-    Name: "Rajorshi Ghosh",
-    Email: "rajorshi@email.com",
-    Role: "Applicant",
-  };
+  // const dummyUser = {
+  //   id: 1,
+  //   name: "Rajorshi Ghosh",
+  //   email: "rajorshi@email.com",
+  //   roleName: "Applicant",
+  // };
+
+  const { currentUser } = useContext(AuthContext);
 
   const totalApplications = 0;
   const totalSelectedApplications = 0;
+
+  console.log(currentUser);
 
   return (
     <Container>
       {/* <h2 className="text-center p-3">Home Page</h2> */}
       <div className="pt-4">
         <ApplicantDashboard
-          user={dummyUser}
+          user={currentUser}
           totalApplications={totalApplications}
           totalSelectedApplications={totalSelectedApplications}
         />

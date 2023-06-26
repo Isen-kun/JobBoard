@@ -37,7 +37,7 @@ const ApplicantDashboard = ({
 
   return (
     <div className="">
-      <h3>Welcome, {user.Name}!</h3>
+      <h3>Welcome, {user.name}!</h3>
       <Row>
         <Col md="8">
           <Card color="info" outline>
@@ -50,7 +50,7 @@ const ApplicantDashboard = ({
                 <Input
                   type="text"
                   name="Name"
-                  value={editedUser.Name}
+                  value={editedUser.name}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                 />
@@ -59,7 +59,7 @@ const ApplicantDashboard = ({
                 <Input
                   type="email"
                   name="Email"
-                  value={editedUser.Email}
+                  value={editedUser.email}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                 />
@@ -69,7 +69,7 @@ const ApplicantDashboard = ({
                 <Input
                   type="text"
                   name="Role"
-                  value={user.Role}
+                  value={user.roleName}
                   disabled={true}
                 />
                 <br />
