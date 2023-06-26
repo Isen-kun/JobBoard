@@ -45,7 +45,7 @@ const RegisterApplicant = () => {
     })
       .then((res) => {
         console.log(res);
-        if (!res.ok) {
+        if (res.status < 200 || res.status >= 300) {
           throw new Error("Registration failed");
         }
         return res.json();
@@ -58,6 +58,7 @@ const RegisterApplicant = () => {
       })
       .catch((error) => {
         console.log(error);
+        window.alert("Registration failed. Please try again.");
       });
   };
 

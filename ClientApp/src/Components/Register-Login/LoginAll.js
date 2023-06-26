@@ -47,11 +47,12 @@ const Login = () => {
       })
       .then((data) => {
         console.log(data);
-        setCurrentUser(data.user);
+        // setCurrentUser(data.user);
         setLoading(false);
 
         // Save the token in local storage
-        // localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
         window.alert("Login successful!");
 
         // Redirect to /home

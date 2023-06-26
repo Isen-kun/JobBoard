@@ -3,8 +3,7 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const PrivateRoute = ({ children }) => {
-  const { currentUser } = useContext(AuthContext);
-  const token = JSON.parse(localStorage.getItem("token"));
+  const { currentUser, jwtToken } = useContext(AuthContext);
   return currentUser ? children : <Navigate to="/" />;
 };
 

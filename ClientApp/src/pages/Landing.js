@@ -19,7 +19,7 @@ const Landing = () => {
         </Row>
 
         {loading ? (
-          <div className="text-center">
+          <div className="text-center p-5 m-5">
             <Spinner type="grow" />
           </div>
         ) : (
