@@ -25,7 +25,7 @@ namespace JobBoard.Controllers
 
         // GET api/<JobsController>/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "admin,employer,applicant")]
+        //[Authorize(Roles = "admin,employer,applicant")]
         public IActionResult GetJobById(int id)
         {
             var job = _dbContext.Jobs.FirstOrDefault(x => x.Id == id);

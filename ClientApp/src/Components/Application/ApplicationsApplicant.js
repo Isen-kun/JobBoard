@@ -1,33 +1,39 @@
 import ApplicationsTable from "./ApplicationsTable";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, Spinner } from "reactstrap";
+import { useState, useEffect } from "react";
 
 const ApplicationsApplicant = () => {
-  const dummyApplications = [
-    {
-      Id: 1,
-      Job: "Software Engineer",
-      Status: "Applied",
-      AppliedAt: "2023-06-20",
-      Resume: "John Doe - Resume.pdf",
-    },
-    {
-      Id: 2,
-      Job: "Data Analyst",
-      Status: "Withdrawn",
-      AppliedAt: "2023-06-18",
-      Resume: "Jane Smith - Resume.pdf",
-    },
-    // Add more dummy application objects as needed
-  ];
+  const [applications, setApplications] = useState(null);
+
+  useEffect(() => {
+    fetch("api/Applications")
+      .then((response) => response.json())
+      .then((data) => {
+        const promises = data.map((application) => {
+          return fetch(`api/Jobs/${application.jobId}`)
+            .then((response) => response.json())
+            .then((job) => {
+              application.jobTitle = job.title;
+              return application;
+            });
+        });
+        Promise.all(promises).then((applicationsWithJobTitles) => {
+          setApplications(applicationsWithJobTitles);
+        });
+      });
+  }, []);
+
   return (
     <div>
       <h6>Here are your applications for:</h6>
-      {/* <Card className="shadow"> */}
-      <Card>
-        <CardBody>
-          <ApplicationsTable applications={dummyApplications} />
-        </CardBody>
-      </Card>
+      {applications === null && <Spinner />}
+      {applications !== null && (
+        <Card>
+          <CardBody>
+            <ApplicationsTable applications={applications} />
+          </CardBody>
+        </Card>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -28,7 +28,7 @@ const RegisterApplicant = () => {
     } else {
       setDisableButton(true);
     }
-  });
+  }, [password, confirmPassword]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,8 +39,7 @@ const RegisterApplicant = () => {
       password,
     };
 
-    console.log(user);
-    fetch("api/Users/RegisterApplicant", {
+    fetch("api/Users/registerApplicant", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,9 +47,9 @@ const RegisterApplicant = () => {
       body: JSON.stringify(user),
     })
       .then((res) => {
-        console.log(res);
-        if (res.status < 200 || res.status >= 300) {
-          window.alert("Registration failed");
+        if (!res.ok) {
+          // Check for error status
+          throw new Error("Registration failed");
         }
         return res.json();
       })
@@ -64,6 +63,7 @@ const RegisterApplicant = () => {
       .catch((error) => {
         console.log(error);
         window.alert("Registration failed. Please try again.");
+        setLoading(false);
       });
   };
 

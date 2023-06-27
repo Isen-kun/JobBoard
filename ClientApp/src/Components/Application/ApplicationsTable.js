@@ -24,12 +24,12 @@ const ApplicationsTable = ({ applications }) => {
       </thead>
       <tbody>
         {applications.map((application) => (
-          <tr key={application.Id}>
-            <td>{application.Id}</td>
-            <td>{application.Job}</td>
-            <td>{application.Status}</td>
-            <td>{application.AppliedAt}</td>
-            <td>{application.Resume}</td>
+          <tr key={application.id}>
+            <td>{application.id}</td>
+            <td>{application.jobTitle}</td>
+            <td>{application.status}</td>
+            <td>{application.appliedAt}</td>
+            <td>{application.resumeUrl}</td>
             <td>
               <Button
                 color="warning"
