@@ -14,7 +14,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<SkillsController>
         [HttpGet]
-        [Authorize(Policy = "admin")]
+        //[Authorize(Policy = "admin")]
         public IEnumerable<Skill> GetSkills()
         {
             return _dbContext.Skills;
@@ -22,7 +22,7 @@ namespace JobBoard.Controllers
 
         // GET api/<SkillsController>/5
         [HttpGet("{id}")]
-        [Authorize(Policy = "admin")]
+        //[Authorize(Policy = "admin")]
         public IActionResult GetSKillById(int id)
         {
             var skill = _dbContext.Skills.FirstOrDefault(x => x.Id == id);

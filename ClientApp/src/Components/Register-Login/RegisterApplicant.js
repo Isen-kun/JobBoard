@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -8,7 +8,7 @@ const RegisterApplicant = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [enableButton, setEnableButton] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -20,11 +20,15 @@ const RegisterApplicant = () => {
     } else if (name === "applicantRePassword") {
       setConfirmPassword(value);
     }
-
-    if (password !== confirmPassword) {
-      setEnableButton(true);
-    }
   };
+
+  useEffect(() => {
+    if (password === confirmPassword) {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,15 +50,16 @@ const RegisterApplicant = () => {
       .then((res) => {
         console.log(res);
         if (res.status < 200 || res.status >= 300) {
-          throw new Error("Registration failed");
+          window.alert("Registration failed");
         }
         return res.json();
       })
       .then((data) => {
-        window.alert("Registration successful!");
+        window.alert("Registration successful! Kindly login.");
         setLoading(false);
-        // clear
-        // window.location.reload();
+
+        // clear;
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -97,7 +102,7 @@ const RegisterApplicant = () => {
           onChange={handleOnChange}
         />
       </FormGroup>
-      <Button color="secondary" outline disabled={enableButton}>
+      <Button color="secondary" outline disabled={disableButton}>
         Register
       </Button>
     </Form>

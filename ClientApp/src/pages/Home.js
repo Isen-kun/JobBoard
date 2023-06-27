@@ -16,8 +16,6 @@ const Home = () => {
   const totalApplications = 0;
   const totalSelectedApplications = 0;
 
-  console.log(currentUser);
-
   return (
     <Container>
       {/* <h2 className="text-center p-3">Home Page</h2> */}

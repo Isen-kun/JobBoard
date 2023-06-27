@@ -56,14 +56,13 @@ const Login = () => {
         window.alert("Login successful!");
 
         // Redirect to /home
-        navigate("/home");
+        // navigate("/home");
+        // window.location.href = "https://localhost:44438/home";
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
         window.alert("Login failed. Please try again.");
-
-        //window.location.reload();
-        // Reload the page
       });
   };
 

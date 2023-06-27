@@ -5,6 +5,7 @@ const LogoutAll = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     console.log("Logged Out");
+    window.location.reload();
   };
 
   return (

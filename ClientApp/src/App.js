@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import NavBar from "./Components/Navbar/NavBar";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
@@ -16,7 +16,12 @@ const App = () => {
       <header>{currentUser && <NavBar />}</header>
       <main>
         <Routes>
-          <Route index element={<Landing />} />
+          <Route
+            path="/"
+            element={
+              currentUser ? <Navigate to="/home" replace /> : <Landing />
+            }
+          />
           <Route
             path="home"
             element={
@@ -41,6 +46,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </main>
     </BrowserRouter>
