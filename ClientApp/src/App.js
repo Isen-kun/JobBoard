@@ -7,6 +7,10 @@ import Jobs from "./pages/Jobs";
 import Applications from "./pages/Applications";
 import { AuthContext } from "./contexts/AuthContext";
 import PrivateRoute from "./Components/Register-Login/PrivateRoute";
+import Locations from "./pages/Locations";
+import Categories from "./pages/Categories";
+import Skills from "./pages/Skills";
+import "./Styles.css";
 
 const App = () => {
   const { currentUser } = useContext(AuthContext);
@@ -14,7 +18,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <header>{currentUser && <NavBar />}</header>
-      <main>
+      <main className="bg-image">
         <Routes>
           <Route
             path="/"
@@ -35,6 +39,30 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Jobs />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="locations"
+            element={
+              <PrivateRoute>
+                <Locations />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="skills"
+            element={
+              <PrivateRoute>
+                <Skills />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="categories"
+            element={
+              <PrivateRoute>
+                <Categories />
               </PrivateRoute>
             }
           />

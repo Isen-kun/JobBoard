@@ -1,15 +1,20 @@
 import ApplicationsTable from "./ApplicationsTable";
 import { Card, CardBody, Spinner } from "reactstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const ApplicationsApplicant = () => {
+  const { currentUser } = useContext(AuthContext);
   const [applications, setApplications] = useState(null);
 
   useEffect(() => {
     fetch("api/Applications")
       .then((response) => response.json())
       .then((data) => {
-        const promises = data.map((application) => {
+        const filteredData = data.filter((application) => {
+          return application.userId === currentUser.id;
+        });
+        const promises = filteredData.map((application) => {
           return fetch(`api/Jobs/${application.jobId}`)
             .then((response) => response.json())
             .then((job) => {
@@ -21,11 +26,11 @@ const ApplicationsApplicant = () => {
           setApplications(applicationsWithJobTitles);
         });
       });
-  }, []);
+  }, [currentUser]);
 
   return (
     <div>
-      <h6>Here are your applications for:</h6>
+      <h5>Here are your previous applications:</h5>
       {applications === null && <Spinner />}
       {applications !== null && (
         <Card>

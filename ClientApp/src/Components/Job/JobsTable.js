@@ -1,16 +1,8 @@
 import { Table, Button } from "reactstrap";
 
 const JobsTable = ({ jobs }) => {
-  const onView = (job) => {
+  const onApply = (job) => {
     console.log("View:", job);
-  };
-
-  const onEdit = (job) => {
-    console.log("Edit:", job);
-  };
-
-  const onDelete = (job) => {
-    console.log("Delete:", job);
   };
 
   return (
@@ -27,8 +19,6 @@ const JobsTable = ({ jobs }) => {
           <th>Skill</th>
           <th>Location</th>
           <th></th>
-          <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -44,19 +34,9 @@ const JobsTable = ({ jobs }) => {
             <td>{job.Skill}</td>
             <td>{job.Location}</td>
             <td>
-              <Button color="primary" size="sm" onClick={() => onView(job)}>
-                View
+              <Button color="primary" size="sm" onClick={() => onApply(job)}>
+                Apply
               </Button>{" "}
-            </td>
-            <td>
-              <Button color="info" size="sm" onClick={() => onEdit(job)}>
-                Edit
-              </Button>{" "}
-            </td>
-            <td>
-              <Button color="danger" size="sm" onClick={() => onDelete(job)}>
-                Delete
-              </Button>
             </td>
           </tr>
         ))}

@@ -1,0 +1,10 @@
+.bg-image {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  /* background-image: url("../Assets/landing.png"); */
+  /* background-image: url("../Assets/landing.jpg"); */
+  /* background-image: url("../Assets/landing.jpeg"); */
+  background-image: url("../Assets/background.avif");
+}

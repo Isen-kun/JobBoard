@@ -91,7 +91,7 @@ const JobsApplicant = () => {
 
   return (
     <div>
-      <h6>Here are the jobs you have applied for:</h6>
+      <h5>Here are the available jobs you can apply for:</h5>
       {jobs === null && <Spinner />}
       {jobs && (
         <Card>

@@ -10,6 +10,21 @@ const NavApplicant = () => {
         </NavLink>
       </NavItem>
       <NavItem>
+        <NavLink className="nav-link" to="/locations">
+          View Locations
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink className="nav-link" to="/skills">
+          View Skills
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink className="nav-link" to="/categories">
+          View Categories
+        </NavLink>
+      </NavItem>
+      <NavItem>
         <NavLink className="nav-link" to="/applications">
           My Applications
         </NavLink>

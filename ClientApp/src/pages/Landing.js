@@ -11,10 +11,10 @@ const Landing = () => {
   return (
     <div className="landing-page">
       <Container>
-        <Row className="text-center p-4">
+        <Row className="text-center p-5">
           <Col md={12}>
-            <h1>Welcome to the Job Board</h1>
-            <h6>Making Tech Hiring simpler and effective</h6>
+            <h1>Welcome to the Job Board💼</h1>
+            <h6>Making Tech Hiring simpler and effective💻</h6>
           </Col>
         </Row>
 
@@ -23,7 +23,7 @@ const Landing = () => {
             <Spinner type="grow" />
           </div>
         ) : (
-          <Row className="mt-2">
+          <Row className="pt-2">
             <Col md={4}>
               <h3>Register as an Applicant</h3>
               <RegisterApplicant />
