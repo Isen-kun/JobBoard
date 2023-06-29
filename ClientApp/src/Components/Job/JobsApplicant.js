@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import JobsTable from "./JobsTable";
 import { Card, CardBody, Spinner } from "reactstrap";
+import ApplyModal from "./ApplyModal";
 
 const JobsApplicant = () => {
   const [jobs, setJobs] = useState(null);
+  const [modal, setModal] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
     fetchJobs();
@@ -89,6 +92,15 @@ const JobsApplicant = () => {
       .catch((error) => console.log(error));
   };
 
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  const onApply = (job) => {
+    setSelectedJob(job);
+    toggleModal();
+  };
+
   return (
     <div>
       <h5>Here are the available jobs you can apply for:</h5>
@@ -96,9 +108,16 @@ const JobsApplicant = () => {
       {jobs && (
         <Card>
           <CardBody>
-            <JobsTable jobs={jobs} />
+            <JobsTable jobs={jobs} onApply={onApply} />
           </CardBody>
         </Card>
+      )}
+      {selectedJob && (
+        <ApplyModal
+          isOpen={modal}
+          toggle={toggleModal}
+          selectedJob={selectedJob}
+        />
       )}
     </div>
   );

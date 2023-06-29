@@ -44,7 +44,7 @@ namespace JobBoard.Controllers
                     application.Status,
                     application.AppliedAt,
                     // Return the static serve link for the file
-                    ResumeUrl = GetResumeUrl(application.Resume) // Custom method to get the static serve link
+                    ResumeName = GetResumeName(application.Resume) // Custom method to get the static serve link
                 };
             });
 
@@ -193,7 +193,6 @@ namespace JobBoard.Controllers
         }
 
 
-
         private string GetResumeUrl(string resumePath)
         {
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
@@ -204,6 +203,17 @@ namespace JobBoard.Controllers
             var resumeUrlPath = $"assets/{resumeFileName}";
 
             return $"{baseUrl}/{resumeUrlPath}";
+        }
+
+        private string GetResumeName(string? resume)
+        {
+            if (string.IsNullOrEmpty(resume))
+            {
+                return string.Empty;
+            }
+
+            // Get the file name from the absolute path and return it
+            return Path.GetFileName(resume);
         }
     }
 }

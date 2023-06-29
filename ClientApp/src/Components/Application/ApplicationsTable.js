@@ -1,12 +1,8 @@
 import { Table, Button } from "reactstrap";
 
-const ApplicationsTable = ({ applications }) => {
+const ApplicationsTable = ({ applications, onDownload }) => {
   const onWithdraw = (application) => {
     console.log("Withdraw:", application);
-  };
-
-  const onEdit = (application) => {
-    console.log("Edit:", application);
   };
 
   return (
@@ -29,23 +25,23 @@ const ApplicationsTable = ({ applications }) => {
             <td>{application.jobTitle}</td>
             <td>{application.status}</td>
             <td>{application.appliedAt}</td>
-            <td>{application.resumeUrl}</td>
-            <td>
-              <Button
-                color="warning"
-                size="sm"
-                onClick={() => onWithdraw(application)}
-              >
-                Withdraw
-              </Button>
-            </td>
+            <td>{application.resumeName}</td>
             <td>
               <Button
                 color="info"
                 size="sm"
-                onClick={() => onEdit(application)}
+                onClick={() => onDownload(application)}
               >
-                Edit
+                Download Resume 📩
+              </Button>
+            </td>
+            <td>
+              <Button
+                color="danger"
+                size="sm"
+                onClick={() => onWithdraw(application)}
+              >
+                Withdraw Application
               </Button>
             </td>
           </tr>

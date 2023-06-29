@@ -1,10 +1,6 @@
 import { Table, Button } from "reactstrap";
 
-const JobsTable = ({ jobs }) => {
-  const onApply = (job) => {
-    console.log("View:", job);
-  };
-
+const JobsTable = ({ jobs, onApply }) => {
   return (
     <Table>
       <thead>
@@ -34,9 +30,9 @@ const JobsTable = ({ jobs }) => {
             <td>{job.Skill}</td>
             <td>{job.Location}</td>
             <td>
-              <Button color="primary" size="sm" onClick={() => onApply(job)}>
+              <Button color="success" size="sm" onClick={() => onApply(job)}>
                 Apply
-              </Button>{" "}
+              </Button>
             </td>
           </tr>
         ))}
