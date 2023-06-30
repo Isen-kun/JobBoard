@@ -57,6 +57,49 @@ const ApplicationsApplicant = () => {
     }
   };
 
+  const onWithdraw = (application) => {
+    console.log("Withdraw:", application);
+
+    // Replace the withdraw button with a spinner
+    const updatedApplications = applications.map((app) => {
+      if (app.id === application.id) {
+        return { ...app, isWithdrawing: true };
+      } else {
+        return app;
+      }
+    });
+    setApplications(updatedApplications);
+
+    // Make the API call to delete the application
+    fetch(`api/Applications/${application.id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Remove the application from the list of applications
+          const newApplications = applications.filter(
+            (app) => app.id !== application.id
+          );
+          setApplications(newApplications);
+        } else {
+          throw new Error("Failed to withdraw application");
+        }
+      })
+      .catch((error) => {
+        console.error("Error occurred while withdrawing application", error);
+
+        // Set the isWithdrawing flag back to false to re-enable the withdraw button
+        const restoredApplications = applications.map((app) => {
+          if (app.id === application.id) {
+            return { ...app, isWithdrawing: false };
+          } else {
+            return app;
+          }
+        });
+        setApplications(restoredApplications);
+      });
+  };
+
   return (
     <div>
       <h5>Here are your previous applications:</h5>
@@ -67,6 +110,7 @@ const ApplicationsApplicant = () => {
             <ApplicationsTable
               applications={applications}
               onDownload={onDownload}
+              onWithdraw={onWithdraw}
             />
           </CardBody>
         </Card>

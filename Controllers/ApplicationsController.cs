@@ -171,7 +171,7 @@ namespace JobBoard.Controllers
 
         // DELETE api/<ApplicationsController>/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin,employer,applicant")]
+        //[Authorize(Roles = "admin,employer,applicant")]
         public IActionResult Delete(int id)
         {
             var application = _dbContext.Applications.Find(id);

@@ -99,8 +99,10 @@ const ApplicantDashboard = ({
             <Col>
               <Card color="warning" outline>
                 <CardBody>
-                  <CardTitle tag="h5">Total Applied Applications</CardTitle>
-                  <CardText>
+                  <CardTitle tag="h5" className="p-2">
+                    Total Applied Applications
+                  </CardTitle>
+                  <CardText className="text-center">
                     <strong>{totalApplications}</strong>
                   </CardText>
                 </CardBody>
@@ -111,8 +113,10 @@ const ApplicantDashboard = ({
             <Col>
               <Card color="success" outline>
                 <CardBody>
-                  <CardTitle tag="h5">Total Selected Applications</CardTitle>
-                  <CardText>
+                  <CardTitle tag="h5" className="p-2">
+                    Total Selected Applications
+                  </CardTitle>
+                  <CardText className="text-center">
                     <strong>{totalSelectedApplications}</strong>
                   </CardText>
                 </CardBody>

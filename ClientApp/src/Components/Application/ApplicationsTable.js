@@ -1,10 +1,6 @@
-import { Table, Button } from "reactstrap";
+import { Table, Button, Spinner } from "reactstrap";
 
-const ApplicationsTable = ({ applications, onDownload }) => {
-  const onWithdraw = (application) => {
-    console.log("Withdraw:", application);
-  };
-
+const ApplicationsTable = ({ applications, onDownload, onWithdraw }) => {
   return (
     <Table>
       <thead>
@@ -36,13 +32,17 @@ const ApplicationsTable = ({ applications, onDownload }) => {
               </Button>
             </td>
             <td>
-              <Button
-                color="danger"
-                size="sm"
-                onClick={() => onWithdraw(application)}
-              >
-                Withdraw Application
-              </Button>
+              {application.isWithdrawing ? (
+                <Spinner size="sm" color="light" />
+              ) : (
+                <Button
+                  color="danger"
+                  size="sm"
+                  onClick={() => onWithdraw(application)}
+                >
+                  Withdraw Application
+                </Button>
+              )}
             </td>
           </tr>
         ))}
