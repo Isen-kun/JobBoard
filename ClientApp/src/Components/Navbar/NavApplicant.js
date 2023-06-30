@@ -1,33 +1,33 @@
 import { NavItem } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavApplicant = () => {
   return (
     <>
       <NavItem>
-        <NavLink className="nav-link" to="/jobs">
+        <Link className="nav-link" to="/jobs">
           Listed Jobs
-        </NavLink>
+        </Link>
       </NavItem>
       <NavItem>
-        <NavLink className="nav-link" to="/locations">
+        <Link className="nav-link" to="/locations">
           View Locations
-        </NavLink>
+        </Link>
       </NavItem>
       <NavItem>
-        <NavLink className="nav-link" to="/skills">
+        <Link className="nav-link" to="/skills">
           View Skills
-        </NavLink>
+        </Link>
       </NavItem>
       <NavItem>
-        <NavLink className="nav-link" to="/categories">
+        <Link className="nav-link" to="/categories">
           View Categories
-        </NavLink>
+        </Link>
       </NavItem>
       <NavItem>
-        <NavLink className="nav-link" to="/applications">
+        <Link className="nav-link" to="/applications">
           My Applications
-        </NavLink>
+        </Link>
       </NavItem>
     </>
   );

@@ -35,6 +35,7 @@ const RegisterApplicant = () => {
     setLoading(true);
 
     const user = {
+      name: "APPLICANT NAME",
       email,
       password,
     };
@@ -47,6 +48,7 @@ const RegisterApplicant = () => {
       body: JSON.stringify(user),
     })
       .then((res) => {
+        console.log(res);
         if (!res.ok) {
           // Check for error status
           throw new Error("Registration failed");
@@ -54,11 +56,14 @@ const RegisterApplicant = () => {
         return res.json();
       })
       .then((data) => {
-        window.alert("Registration successful! Kindly login.");
-        setLoading(false);
-
-        // clear;
-        window.location.reload();
+        if (data.message === "New Applicant registered") {
+          window.alert("Registration successful! Kindly login.");
+          setLoading(false);
+          // clear;
+          window.location.reload();
+        } else {
+          throw new Error("Registration failed");
+        }
       })
       .catch((error) => {
         console.log(error);

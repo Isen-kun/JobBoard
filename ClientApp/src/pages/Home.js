@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { Container, Alert, Spinner } from "reactstrap";
-import ApplicantDashboard from "../Components/Dashboard/ApplicantDashboard";
+import Dashboard from "../Components/Dashboard/Dashboard";
 import { AuthContext } from "../contexts/AuthContext";
 
 const Home = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, jwtToken } = useContext(AuthContext);
 
   const [totalApplications, setTotalApplications] = useState(0);
   const [totalSelectedApplications, setTotalSelectedApplications] = useState(0);
@@ -15,7 +15,11 @@ const Home = () => {
     const fetchApplications = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`api/Applications`);
+        const response = await fetch(`api/Applications`, {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        });
         const data = await response.json();
         const userApplications = data.filter(
           (app) => app.userId === currentUser.id
@@ -47,7 +51,7 @@ const Home = () => {
             <Spinner color="info" />
           </div>
         ) : (
-          <ApplicantDashboard
+          <Dashboard
             user={currentUser}
             totalApplications={totalApplications}
             totalSelectedApplications={totalSelectedApplications}

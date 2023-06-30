@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import JobsTable from "./JobsTable";
 import { Card, CardBody, Spinner } from "reactstrap";
 import ApplyModal from "./ApplyModal";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const JobsApplicant = () => {
+  const { jwtToken } = useContext(AuthContext);
+
   const [jobs, setJobs] = useState(null);
   const [modal, setModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -13,7 +16,11 @@ const JobsApplicant = () => {
   }, []);
 
   const fetchJobs = () => {
-    fetch("api/Jobs")
+    fetch("api/Jobs", {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         // Extract employer IDs, category IDs, skill IDs, and location IDs from the job data
@@ -24,28 +31,44 @@ const JobsApplicant = () => {
 
         // Fetch employer data for each employer ID
         const employerPromises = employerIds.map((employerId) =>
-          fetch(`api/Employers/${employerId}`)
+          fetch(`api/Employers/${employerId}`, {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          })
             .then((response) => response.json())
             .then((employer) => employer.companyName)
         );
 
         // Fetch category data for each category ID
         const categoryPromises = categoryIds.map((categoryId) =>
-          fetch(`api/Categories/${categoryId}`)
+          fetch(`api/Categories/${categoryId}`, {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          })
             .then((response) => response.json())
             .then((category) => category.name)
         );
 
         // Fetch skill data for each skill ID
         const skillPromises = skillIds.map((skillId) =>
-          fetch(`api/Skills/${skillId}`)
+          fetch(`api/Skills/${skillId}`, {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          })
             .then((response) => response.json())
             .then((skill) => skill.name)
         );
 
         // Fetch location data for each location ID
         const locationPromises = locationIds.map((locationId) =>
-          fetch(`api/Locations/${locationId}`)
+          fetch(`api/Locations/${locationId}`, {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          })
             .then((response) => response.json())
             .then((location) => location.city)
         );

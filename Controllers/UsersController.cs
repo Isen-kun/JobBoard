@@ -3,6 +3,7 @@ using JobBoard.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -24,7 +25,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<UsersController>
         [HttpGet]
-        //[Authorize(Policy = "admin")]
+        [Authorize(Policy = "admin")]
         public IEnumerable<User> GetAllUsers()
         {
             return _dbContext.Users;
@@ -42,27 +43,27 @@ namespace JobBoard.Controllers
             user.RoleId = 2;
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created);
+            return new JsonResult(new { message = "New Employer registered" });
         }
 
 
-        [HttpPost("[action]")]
-        public IActionResult RegisterApplicant([FromBody] User user)
+    [HttpPost("[action]")]
+    public IActionResult RegisterApplicant([FromBody] User user)
+    {
+        var userExists = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
+        if (userExists != null)
         {
-            var userExists = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
-            if (userExists != null)
-            {
-                return BadRequest("User with same email already exists");
-            }
-
-            user.RoleId = 3;
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created);
+            return BadRequest("User with same email already exists");
         }
 
+        user.RoleId = 3;
+        _dbContext.Users.Add(user);
+        _dbContext.SaveChanges();
+        return new JsonResult(new { message = "New Applicant registered" });
+    }
 
-        [HttpPost("[action]")]
+
+    [HttpPost("[action]")]
         public IActionResult Login([FromBody] User user)
         {
             var currentUser = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
@@ -103,6 +104,22 @@ namespace JobBoard.Controllers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             //return Ok(jwt);
             return Ok(new { token = jwt, user = new { currentUser.Id,currentUser.Name, currentUser.Email, roleName } });
+        }
+
+        [Authorize(Roles = "admin,employer,applicant")]
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] User user)
+        {
+            var existingUser = _dbContext.Users.Find(id);
+            if (existingUser == null)
+            {
+                return NotFound("No records found with this id " + id);
+            }
+
+            existingUser.Name = user.Name;
+            existingUser.Email = user.Email;
+            _dbContext.SaveChanges();
+            return Ok("Record updated successfully");
         }
     }
 }

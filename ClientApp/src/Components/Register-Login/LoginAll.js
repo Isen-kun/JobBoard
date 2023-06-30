@@ -29,7 +29,6 @@ const Login = () => {
       password,
     };
 
-    console.log(user);
     fetch("api/Users/Login", {
       method: "POST",
       headers: {

@@ -4,18 +4,26 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const ApplicationsApplicant = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, jwtToken } = useContext(AuthContext);
   const [applications, setApplications] = useState(null);
 
   useEffect(() => {
-    fetch("api/Applications")
+    fetch("api/Applications", {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         const filteredData = data.filter((application) => {
           return application.userId === currentUser.id;
         });
         const promises = filteredData.map((application) => {
-          return fetch(`api/Jobs/${application.jobId}`)
+          return fetch(`api/Jobs/${application.jobId}`, {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          })
             .then((response) => response.json())
             .then((job) => {
               application.jobTitle = job.title;
@@ -37,6 +45,9 @@ const ApplicationsApplicant = () => {
         `api/Applications/AppResume/${application.id}`,
         {
           method: "GET",
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
         }
       );
 
@@ -73,6 +84,9 @@ const ApplicationsApplicant = () => {
     // Make the API call to delete the application
     fetch(`api/Applications/${application.id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
     })
       .then((response) => {
         if (response.ok) {

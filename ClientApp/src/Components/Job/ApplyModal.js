@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 
 const ApplyModal = ({ isOpen, toggle, selectedJob }) => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, jwtToken } = useContext(AuthContext);
 
   const [application, setApplication] = useState({
     UserId: currentUser.id,
@@ -50,6 +50,9 @@ const ApplyModal = ({ isOpen, toggle, selectedJob }) => {
     fetch("/api/Applications", {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
     })
       .then((response) => {
         if (response.ok) {

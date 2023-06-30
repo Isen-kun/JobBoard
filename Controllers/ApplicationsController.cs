@@ -27,7 +27,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<ApplicationsController>
         [HttpGet]
-        //[Authorize(Roles = "admin,employer,applicant")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IActionResult GetApplications()
         {
             var applications = _dbContext.Applications.ToList();
@@ -54,7 +54,7 @@ namespace JobBoard.Controllers
 
         // GET api/<ApplicationsController>/5
         [HttpGet("{id}")]
-        //[Authorize(Roles = "admin,employer,applicant")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IActionResult GetApplicationById(int id)
         {
             var application = _dbContext.Applications.FirstOrDefault(x => x.Id == id);
@@ -80,7 +80,7 @@ namespace JobBoard.Controllers
 
         // GET api/<ApplicationsController>/5
         [HttpGet("AppResume/{id}")]
-        //[Authorize(Roles = "admin,employer,applicant")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IActionResult GetApplicationResumeById(int id)
         {
             var application = _dbContext.Applications.FirstOrDefault(x => x.Id == id);
@@ -100,7 +100,7 @@ namespace JobBoard.Controllers
 
         // POST api/<ApplicationsController>
         [HttpPost]
-        //[Authorize(Roles = "admin,applicant")]
+        [Authorize(Roles = "admin,applicant")]
         public IActionResult Post(IFormFile file, [FromForm] Application application)
         {
             if (file == null || file.Length == 0)
@@ -171,7 +171,7 @@ namespace JobBoard.Controllers
 
         // DELETE api/<ApplicationsController>/5
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "admin,employer,applicant")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IActionResult Delete(int id)
         {
             var application = _dbContext.Applications.Find(id);

@@ -1,17 +1,30 @@
 import { Card, CardBody, Container, Spinner } from "reactstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import LocationsTable from "../Components/Location/LocationsTable";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Locations = () => {
+  const { jwtToken } = useContext(AuthContext);
+
   const [locations, setLocations] = useState(null);
 
   useEffect(() => {
     // Fetch data from the Locations endpoint
-    fetch("api/Locations")
+    fetch("api/Locations", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
       .then((response) => response.json())
       .then((locationsData) => {
         // Fetch data from the Jobs endpoint
-        fetch("api/Jobs")
+        fetch("api/Jobs", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        })
           .then((response) => response.json())
           .then((jobsData) => {
             // Match location ids and count the number of jobs for each location

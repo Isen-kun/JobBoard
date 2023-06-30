@@ -1,17 +1,30 @@
 import { Card, CardBody, Container, Spinner } from "reactstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import SkillsTable from "../Components/Skill/SkillsTable";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Skills = () => {
+  const { jwtToken } = useContext(AuthContext);
+
   const [skills, setSkills] = useState(null);
 
   useEffect(() => {
     // Fetch data from the Skills endpoint
-    fetch("api/Skills")
+    fetch("api/Skills", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
       .then((response) => response.json())
       .then((skillsData) => {
         // Fetch data from the Jobs endpoint
-        fetch("api/Jobs")
+        fetch("api/Jobs", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        })
           .then((response) => response.json())
           .then((jobsData) => {
             // Match location ids and count the number of jobs for each skill
@@ -27,7 +40,6 @@ const Skills = () => {
       })
       .catch((error) => console.error(error));
   }, []);
-
   return (
     <Container fluid>
       <div className="p-4">

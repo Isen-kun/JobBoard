@@ -1,25 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  // NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   NavbarText,
-  Button,
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavApplicant from "./NavApplicant";
 import NavEmployer from "./NavEmployer";
 import LogoutAll from "../Register-Login/LogoutAll";
+import { AuthContext } from "../../contexts/AuthContext";
 
-const NavBar = (args) => {
+const NavBar = () => {
+  const { currentUser } = useContext(AuthContext);
+
+  console.log(currentUser);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -28,15 +25,15 @@ const NavBar = (args) => {
     <div>
       <Navbar expand="md" container="fluid" color="dark" dark>
         <NavbarBrand>
-          <NavLink to="/home" className="navbar-brand">
+          <Link to="/home" className="navbar-brand">
             Job Board
-          </NavLink>
+          </Link>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
-            {true && <NavApplicant />}
-            {false && <NavEmployer />}
+            {currentUser.roleName === "applicant" && <NavApplicant />}
+            {currentUser.roleName === "employer" && <NavEmployer />}
           </Nav>
           <NavbarText>{true && <LogoutAll />}</NavbarText>
         </Collapse>
