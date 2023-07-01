@@ -14,7 +14,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<SkillsController>
         [HttpGet]
-        [Authorize(Policy = "admin")]
+        [Authorize(Roles = "admin,employer")]
         public IEnumerable<Skill> GetSkills()
         {
             return _dbContext.Skills;

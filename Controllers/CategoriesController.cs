@@ -14,7 +14,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<CategoriesController>
         [HttpGet]
-        [Authorize(Policy = "admin")]
+        [Authorize(Roles = "admin,employer")]
         public IEnumerable<Category> GetCategories()
         {
             return _dbContext.Categories;

@@ -10,6 +10,11 @@ const NavEmployer = () => {
         </Link>
       </NavItem>
       <NavItem>
+        <Link className="nav-link" to="/employer">
+          My Information
+        </Link>
+      </NavItem>
+      <NavItem>
         <Link className="nav-link" to="/applications">
           View Applications
         </Link>

@@ -14,7 +14,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<EmployersController>
         [HttpGet]
-        [Authorize(Policy = "admin")]
+        [Authorize(Roles = "admin,employer")]
         public IEnumerable<Employer> GetEmployers()
         {
             return _dbContext.Employers;

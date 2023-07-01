@@ -14,7 +14,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<LocationsController>
         [HttpGet]
-        [Authorize(Policy = "admin")]
+        [Authorize(Roles = "admin,employer")]
         public IEnumerable<Location> GetLocations()
         {
             return _dbContext.Locations;

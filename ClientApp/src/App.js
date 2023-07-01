@@ -11,6 +11,7 @@ import Locations from "./pages/Locations";
 import Categories from "./pages/Categories";
 import Skills from "./pages/Skills";
 import "./Styles.css";
+import EmployerDetails from "./pages/EmployerDetails";
 
 const App = () => {
   const { currentUser } = useContext(AuthContext);
@@ -71,6 +72,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Applications />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="employer"
+            element={
+              <PrivateRoute>
+                <EmployerDetails />
               </PrivateRoute>
             }
           />
