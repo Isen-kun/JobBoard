@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Modal, ModalHeader, ModalBody, Spinner } from "reactstrap";
+import { Button, Spinner, Card, CardBody } from "reactstrap";
 import { AuthContext } from "../../contexts/AuthContext";
 import JobsTable from "./JobsTable";
 import PostModal from "./PostModal";
@@ -14,8 +14,9 @@ const JobsEmployer = () => {
   const [locations, setLocations] = useState([]);
   const [skills, setSkills] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [trigger, setTrigger] = useState(false);
 
-  // Fetch employer data and filter for the current user's employer
+  // Fetch employer data and filter for the current employer
   useEffect(() => {
     setLoading(true);
     fetch("api/Employers", {
@@ -35,40 +36,73 @@ const JobsEmployer = () => {
   }, [currentUser.id, jwtToken]);
 
   // Fetch jobs data and filter for the current employer's jobs
+  const fetchJobs = () => {
+    setLoading(true);
+    fetch("api/Jobs", {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const employerJobs = data.filter(
+          (job) => job.employerId === employer.id
+        );
+
+        Promise.all([
+          fetch("api/Skills", {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }).then((response) => response.json()),
+          fetch("api/Categories", {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }).then((response) => response.json()),
+          fetch("api/Locations", {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }).then((response) => response.json()),
+        ])
+          .then(([skillsData, categoriesData, locationsData]) => {
+            const modifiedJobs = employerJobs.map((job) => {
+              const skill = skillsData.find((s) => s.id === job.skillId);
+              const category = categoriesData.find(
+                (c) => c.id === job.categoryId
+              );
+              const location = locationsData.find(
+                (l) => l.id === job.locationId
+              );
+
+              return {
+                Id: job.id,
+                EmployerId: job.employerId,
+                Employer: "You",
+                Title: job.title,
+                Description: job.description,
+                JobType: job.jobType,
+                Salary: job.salary,
+                Category: category ? category.name : "",
+                Skill: skill ? skill.name : "",
+                Location: location ? `${location.city}, ${location.state}` : "",
+              };
+            });
+
+            setJobs(modifiedJobs);
+            setLoading(false);
+          })
+          .catch((error) => console.error(error));
+      })
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     if (employer) {
-      setLoading(true);
-      fetch("api/Jobs", {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const employerJobs = data.filter(
-            (job) => job.employerId === employer.id
-          );
-
-          // Modify the job data to include employer, category, skill, and location information
-          const modifiedJobs = employerJobs?.map((job) => ({
-            Id: job.id,
-            EmployerId: job.employerId,
-            Employer: "You", // Set employer as "You" by default for every entry
-            Title: job.title,
-            Description: job.description,
-            JobType: job.jobType,
-            Salary: job.salary, // Include the salary attribute
-            Category: job.categoryId, // Use the categoryId instead of categoryData[index]
-            Skill: job.skillId, // Use the skillId instead of skillData[index]
-            Location: job.locationId, // Use the locationId instead of locationData[index]
-          }));
-
-          setJobs(modifiedJobs);
-          setLoading(false);
-        })
-        .catch((error) => console.error(error));
+      fetchJobs();
     }
-  }, [employer, jwtToken]);
+  }, [employer, jwtToken, trigger]);
 
   // Fetch locations data
   useEffect(() => {
@@ -121,8 +155,9 @@ const JobsEmployer = () => {
   const toggleModal = () => setModal(!modal);
 
   const handlePost = (job) => {
+    toggleModal();
     setLoading(true);
-    toggleModal(); // Close the modal before showing the spinner
+
     fetch("api/Jobs", {
       method: "POST",
       headers: {
@@ -133,10 +168,37 @@ const JobsEmployer = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setJobs([...jobs, data]);
-        setLoading(false);
+        fetchJobs();
+        setTrigger(!trigger);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
+  const onDelete = (job) => {
+    setLoading(true); // set loading to true
+    fetch(`api/Jobs/${job.Id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete job");
+        }
+        setLoading(false); // set loading to false
+      })
+      .then((data) => {
+        fetchJobs();
+        setTrigger(!trigger);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false); // set loading to false
+      });
   };
 
   return (
@@ -151,13 +213,22 @@ const JobsEmployer = () => {
       ) : (
         <div>
           <h6>Job Listings for {employer?.companyName}</h6>
-          <Button color="primary" onClick={toggleModal}>
+          <Button color="primary" onClick={toggleModal} className="m-3">
             Add Job
           </Button>
           {loading ? (
             <Spinner color="primary" />
           ) : jobs?.length > 0 ? (
-            <JobsTable jobs={jobs} onDelete={() => {}} onApply={() => {}} />
+            <Card>
+              <CardBody>
+                <JobsTable
+                  jobs={jobs}
+                  onDelete={onDelete}
+                  onApply={() => {}}
+                  onInfo={() => {}}
+                />
+              </CardBody>
+            </Card>
           ) : (
             <p>No jobs found.</p>
           )}

@@ -2,10 +2,8 @@ import { useContext } from "react";
 import { Table, Button } from "reactstrap";
 import { AuthContext } from "../../contexts/AuthContext";
 
-const JobsTable = ({ jobs, onApply, onDelete }) => {
+const JobsTable = ({ jobs, onApply, onDelete, onInfo }) => {
   const { currentUser } = useContext(AuthContext);
-
-  console.log(jobs);
 
   return (
     <Table>
@@ -20,6 +18,7 @@ const JobsTable = ({ jobs, onApply, onDelete }) => {
           <th>Category</th>
           <th>Skill</th>
           <th>Location</th>
+          {currentUser.roleName === "applicant" && <th></th>}
           <th></th>
         </tr>
       </thead>
@@ -39,6 +38,13 @@ const JobsTable = ({ jobs, onApply, onDelete }) => {
               <td>
                 <Button color="success" size="sm" onClick={() => onApply(job)}>
                   Apply
+                </Button>
+              </td>
+            )}
+            {currentUser.roleName === "applicant" && (
+              <td>
+                <Button color="info" size="sm" onClick={() => onInfo(job)}>
+                  More Information
                 </Button>
               </td>
             )}

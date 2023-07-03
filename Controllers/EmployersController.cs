@@ -14,7 +14,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<EmployersController>
         [HttpGet]
-        [Authorize(Roles = "admin,employer")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IEnumerable<Employer> GetEmployers()
         {
             return _dbContext.Employers;
@@ -22,7 +22,7 @@ namespace JobBoard.Controllers
 
         // GET api/<EmployersController>/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "admin,employer")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IActionResult GetEmployerById(int id)
         {
             var employer = _dbContext.Employers.FirstOrDefault(x => x.Id == id);

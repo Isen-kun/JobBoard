@@ -24,11 +24,11 @@ const NavBar = () => {
   return (
     <div>
       <Navbar expand="md" container="fluid" color="dark" dark>
-        <NavbarBrand>
+        {/* <NavbarBrand> */}
           <Link to="/home" className="navbar-brand">
             Job Board
           </Link>
-        </NavbarBrand>
+        {/* </NavbarBrand> */}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>

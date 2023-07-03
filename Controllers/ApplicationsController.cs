@@ -127,10 +127,51 @@ namespace JobBoard.Controllers
         }
 
 
+        //// PUT api/<ApplicationsController>/5
+        //[HttpPut("{id}")]
+        //[Authorize(Roles = "admin,employer")]
+        //public IActionResult Put(int id, IFormFile file, [FromForm] Application updatedApplication)
+        //{
+        //    var application = _dbContext.Applications.Find(id);
+        //    if (application == null)
+        //    {
+        //        return NotFound("No records found with this id: " + id);
+        //    }
+
+        //    if (file != null)
+        //    {
+        //        // Delete the old resume file
+        //        if (System.IO.File.Exists(application.Resume))
+        //        {
+        //            System.IO.File.Delete(application.Resume);
+        //        }
+
+        //        // Save the new resume file
+        //        var resumeFolderPath = _configuration["AppSettings:ResumeFolderPath"];
+        //        var resumeFileName = Guid.NewGuid().ToString() + ".pdf";
+        //        var resumeFilePath = Path.Combine(resumeFolderPath, resumeFileName);
+
+        //        using (var fileStream = new FileStream(resumeFilePath, FileMode.Create))
+        //        {
+        //            // Copy the file content to the file stream
+        //            file.CopyTo(fileStream);
+        //        }
+
+        //        application.Resume = resumeFilePath;
+        //    }
+
+        //    application.Status = updatedApplication.Status;
+        //    application.AppliedAt = updatedApplication.AppliedAt;
+
+        //    _dbContext.SaveChanges();
+
+        //    return Ok("Record updated successfully");
+        //}
+
         // PUT api/<ApplicationsController>/5
         [HttpPut("{id}")]
         [Authorize(Roles = "admin,employer")]
-        public IActionResult Put(int id, IFormFile file, [FromForm] Application updatedApplication)
+        public IActionResult Put(int id, [FromBody] Application value)
         {
             var application = _dbContext.Applications.Find(id);
             if (application == null)
@@ -138,30 +179,7 @@ namespace JobBoard.Controllers
                 return NotFound("No records found with this id: " + id);
             }
 
-            if (file != null)
-            {
-                // Delete the old resume file
-                if (System.IO.File.Exists(application.Resume))
-                {
-                    System.IO.File.Delete(application.Resume);
-                }
-
-                // Save the new resume file
-                var resumeFolderPath = _configuration["AppSettings:ResumeFolderPath"];
-                var resumeFileName = Guid.NewGuid().ToString() + ".pdf";
-                var resumeFilePath = Path.Combine(resumeFolderPath, resumeFileName);
-
-                using (var fileStream = new FileStream(resumeFilePath, FileMode.Create))
-                {
-                    // Copy the file content to the file stream
-                    file.CopyTo(fileStream);
-                }
-
-                application.Resume = resumeFilePath;
-            }
-
-            application.Status = updatedApplication.Status;
-            application.AppliedAt = updatedApplication.AppliedAt;
+            application.Status = value.Status;
 
             _dbContext.SaveChanges();
 

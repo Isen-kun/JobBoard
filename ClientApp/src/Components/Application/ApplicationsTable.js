@@ -1,6 +1,16 @@
+import { useContext } from "react";
 import { Table, Button, Spinner } from "reactstrap";
+import { AuthContext } from "../../contexts/AuthContext";
 
-const ApplicationsTable = ({ applications, onDownload, onWithdraw }) => {
+const ApplicationsTable = ({
+  applications,
+  onDownload,
+  onWithdraw,
+  onView,
+  onAccept,
+}) => {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <Table>
       <thead>
@@ -22,28 +32,61 @@ const ApplicationsTable = ({ applications, onDownload, onWithdraw }) => {
             <td>{application.status}</td>
             <td>{application.appliedAt}</td>
             <td>{application.resumeName}</td>
-            <td>
-              <Button
-                color="info"
-                size="sm"
-                onClick={() => onDownload(application)}
-              >
-                Download Resume 📩
-              </Button>
-            </td>
-            <td>
-              {application.isWithdrawing ? (
-                <Spinner size="sm" color="light" />
-              ) : (
+            {currentUser.roleName === "applicant" && (
+              <td>
                 <Button
-                  color="danger"
+                  color="info"
                   size="sm"
-                  onClick={() => onWithdraw(application)}
+                  onClick={() => onDownload(application)}
                 >
-                  Withdraw Application
+                  Download Resume 📩
                 </Button>
-              )}
-            </td>
+              </td>
+            )}
+            {currentUser.roleName === "applicant" && (
+              <td>
+                {application.isWithdrawing ? (
+                  <Spinner size="sm" color="light" />
+                ) : (
+                  <Button
+                    color="danger"
+                    size="sm"
+                    onClick={() => onWithdraw(application)}
+                  >
+                    Withdraw Application
+                  </Button>
+                )}
+              </td>
+            )}
+            {currentUser.roleName === "employer" && (
+              <td>
+                <Button
+                  color="info"
+                  size="sm"
+                  onClick={() => onView(application)}
+                >
+                  View Resume
+                </Button>
+              </td>
+            )}
+            {currentUser.roleName === "employer" &&
+            application.status === "Applied" ? (
+              <td>
+                <Button
+                  color="success"
+                  size="sm"
+                  onClick={() => onAccept(application)}
+                >
+                  Accept Applicant
+                </Button>
+              </td>
+            ) : (
+              <td>
+                <Button color="secondary" size="sm" disabled>
+                  Already accepted
+                </Button>
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

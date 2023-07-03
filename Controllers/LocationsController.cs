@@ -14,7 +14,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<LocationsController>
         [HttpGet]
-        [Authorize(Roles = "admin,employer")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IEnumerable<Location> GetLocations()
         {
             return _dbContext.Locations;
@@ -22,7 +22,7 @@ namespace JobBoard.Controllers
 
         // GET api/<LocationsController>/5
         [HttpGet("{id}")]
-        [Authorize(Policy = "admin")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IActionResult GetLocationById(int id)
         {
             var location = _dbContext.Locations.FirstOrDefault(x => x.Id == id);

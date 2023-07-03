@@ -2,14 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import JobsTable from "./JobsTable";
 import { Card, CardBody, Spinner } from "reactstrap";
 import ApplyModal from "./ApplyModal";
+import InfoModal from "./InfoModal";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const JobsApplicant = () => {
   const { jwtToken } = useContext(AuthContext);
 
   const [jobs, setJobs] = useState(null);
-  const [modal, setModal] = useState(false);
+  const [applyModal, setApplyModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [infoModal, setInfoModal] = useState(false);
+  const [selectedInfoJob, setSelectedInfoJob] = useState(null);
 
   useEffect(() => {
     fetchJobs();
@@ -115,13 +118,23 @@ const JobsApplicant = () => {
       .catch((error) => console.log(error));
   };
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const toggleApplyModal = () => {
+    setApplyModal(!applyModal);
+  };
+
+  const toggleInfoModal = () => {
+    setInfoModal(!infoModal);
   };
 
   const onApply = (job) => {
     setSelectedJob(job);
-    toggleModal();
+    toggleApplyModal();
+  };
+
+  const onInfo = (job) => {
+    console.log(job);
+    setSelectedInfoJob(job);
+    toggleInfoModal();
   };
 
   return (
@@ -131,15 +144,27 @@ const JobsApplicant = () => {
       {jobs && (
         <Card>
           <CardBody>
-            <JobsTable jobs={jobs} onApply={onApply} />
+            <JobsTable
+              jobs={jobs}
+              onApply={onApply}
+              onInfo={onInfo}
+              onDelete={() => {}}
+            />
           </CardBody>
         </Card>
       )}
       {selectedJob && (
         <ApplyModal
-          isOpen={modal}
-          toggle={toggleModal}
+          isOpen={applyModal}
+          toggle={toggleApplyModal}
           selectedJob={selectedJob}
+        />
+      )}
+      {selectedInfoJob && (
+        <InfoModal
+          isOpen={infoModal}
+          toggle={toggleInfoModal}
+          job={selectedInfoJob}
         />
       )}
     </div>

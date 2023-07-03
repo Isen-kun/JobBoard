@@ -47,8 +47,8 @@ namespace JobBoard.Controllers
         }
 
 
-    [HttpPost("[action]")]
-    public IActionResult RegisterApplicant([FromBody] User user)
+        [HttpPost("[action]")]
+        public IActionResult RegisterApplicant([FromBody] User user)
     {
         var userExists = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
         if (userExists != null)
@@ -63,7 +63,7 @@ namespace JobBoard.Controllers
     }
 
 
-    [HttpPost("[action]")]
+        [HttpPost("[action]")]
         public IActionResult Login([FromBody] User user)
         {
             var currentUser = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);

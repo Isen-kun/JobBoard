@@ -14,7 +14,7 @@ namespace JobBoard.Controllers
 
         // GET: api/<CategoriesController>
         [HttpGet]
-        [Authorize(Roles = "admin,employer")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IEnumerable<Category> GetCategories()
         {
             return _dbContext.Categories;
@@ -22,7 +22,7 @@ namespace JobBoard.Controllers
 
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]
-        [Authorize(Policy = "admin")]
+        [Authorize(Roles = "admin,employer,applicant")]
         public IActionResult GetCategoryById(int id)
         {
             var category = _dbContext.Categories.FirstOrDefault(x => x.Id == id);
