@@ -83,6 +83,7 @@ const RegisterApplicant = () => {
           placeholder="Enter your email address"
           value={email}
           onChange={handleOnChange}
+          required
         />
       </FormGroup>
       <FormGroup>
@@ -94,6 +95,7 @@ const RegisterApplicant = () => {
           placeholder="Set your password"
           value={password}
           onChange={handleOnChange}
+          required
         />
       </FormGroup>
       <FormGroup>
@@ -105,9 +107,10 @@ const RegisterApplicant = () => {
           placeholder="Re-enter your password"
           value={confirmPassword}
           onChange={handleOnChange}
+          required
         />
       </FormGroup>
-      <Button color="secondary" outline disabled={disableButton}>
+      <Button color="light" outline disabled={disableButton}>
         Register
       </Button>
     </Form>

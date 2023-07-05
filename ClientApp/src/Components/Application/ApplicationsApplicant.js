@@ -116,7 +116,7 @@ const ApplicationsApplicant = () => {
 
   return (
     <div>
-      <h5>Here are your previous applications:</h5>
+      <h5 className="p-2">Here are your previous applications:</h5>
       {applications === null && <Spinner />}
       {applications !== null && (
         <Card>

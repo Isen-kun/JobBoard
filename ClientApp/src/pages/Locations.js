@@ -45,7 +45,9 @@ const Locations = () => {
   return (
     <Container fluid>
       <div className="p-4">
-        <h4>Here are all the available location with available jobs:</h4>
+        <h4 className="text-center p-4" style={{ color: "wheat" }}>
+          Available locations with available jobs count
+        </h4>
         {locations === null && <Spinner />}
         {locations && (
           <Card>

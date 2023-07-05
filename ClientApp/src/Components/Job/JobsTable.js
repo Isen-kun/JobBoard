@@ -6,7 +6,7 @@ const JobsTable = ({ jobs, onApply, onDelete, onInfo }) => {
   const { currentUser } = useContext(AuthContext);
 
   return (
-    <Table>
+    <Table borderless hover striped>
       <thead>
         <tr>
           <th>ID</th>
@@ -44,7 +44,7 @@ const JobsTable = ({ jobs, onApply, onDelete, onInfo }) => {
             {currentUser.roleName === "applicant" && (
               <td>
                 <Button color="info" size="sm" onClick={() => onInfo(job)}>
-                  More Information
+                  More Info
                 </Button>
               </td>
             )}

@@ -50,7 +50,6 @@ const RegisterEmployer = () => {
       .then((res) => {
         console.log(res);
         if (!res.ok) {
-          // Check for error status
           throw new Error("Registration failed");
         }
         return res.json();
@@ -59,7 +58,6 @@ const RegisterEmployer = () => {
         if (data.message === "New Employer registered") {
           window.alert("Registration successful! Kindly login.");
           setLoading(false);
-          // clear;
           window.location.reload();
         } else {
           throw new Error("Registration failed");
@@ -83,6 +81,7 @@ const RegisterEmployer = () => {
           placeholder="Enter your email address"
           value={email}
           onChange={handleOnChange}
+          required
         />
       </FormGroup>
       <FormGroup>
@@ -94,6 +93,7 @@ const RegisterEmployer = () => {
           placeholder="Set your password"
           value={password}
           onChange={handleOnChange}
+          required
         />
       </FormGroup>
       <FormGroup>
@@ -105,9 +105,10 @@ const RegisterEmployer = () => {
           placeholder="Re-enter your password"
           value={confirmPassword}
           onChange={handleOnChange}
+          required
         />
       </FormGroup>
-      <Button color="secondary" outline disabled={disableButton}>
+      <Button color="light" outline disabled={disableButton}>
         Register
       </Button>
     </Form>

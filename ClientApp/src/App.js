@@ -19,7 +19,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <header>{currentUser && <NavBar />}</header>
-      <main className="bg-image">
+      <main>
         <Routes>
           <Route
             path="/"

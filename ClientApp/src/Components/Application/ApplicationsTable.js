@@ -12,7 +12,7 @@ const ApplicationsTable = ({
   const { currentUser } = useContext(AuthContext);
 
   return (
-    <Table>
+    <Table borderless hover striped>
       <thead>
         <tr>
           <th>ID</th>
@@ -70,23 +70,25 @@ const ApplicationsTable = ({
               </td>
             )}
             {currentUser.roleName === "employer" &&
-            application.status === "Applied" ? (
-              <td>
-                <Button
-                  color="success"
-                  size="sm"
-                  onClick={() => onAccept(application)}
-                >
-                  Accept Applicant
-                </Button>
-              </td>
-            ) : (
-              <td>
-                <Button color="secondary" size="sm" disabled>
-                  Already accepted
-                </Button>
-              </td>
-            )}
+              application.status === "Applied" && (
+                <td>
+                  <Button
+                    color="success"
+                    size="sm"
+                    onClick={() => onAccept(application)}
+                  >
+                    Accept Applicant
+                  </Button>
+                </td>
+              )}
+            {currentUser.roleName === "employer" &&
+              application.status === "Accepted" && (
+                <td>
+                  <Button color="secondary" size="sm" disabled>
+                    Already accepted
+                  </Button>
+                </td>
+              )}
           </tr>
         ))}
       </tbody>

@@ -1,12 +1,9 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Login = () => {
-  const navigate = useNavigate();
-
-  const { setCurrentUser, setLoading } = useContext(AuthContext);
+  const { setLoading } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +43,6 @@ const Login = () => {
       })
       .then((data) => {
         console.log(data);
-        // setCurrentUser(data.user);
         setLoading(false);
 
         // Save the token in local storage
@@ -54,9 +50,6 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(data.user));
         window.alert("Login successful!");
 
-        // Redirect to /home
-        // navigate("/home");
-        // window.location.href = "https://localhost:44438/home";
         window.location.reload();
       })
       .catch((error) => {
@@ -76,6 +69,7 @@ const Login = () => {
           placeholder="Enter your email"
           value={email}
           onChange={handleOnChange}
+          required
         />
       </FormGroup>
       <FormGroup>
@@ -87,11 +81,10 @@ const Login = () => {
           placeholder="Enter your password"
           value={password}
           onChange={handleOnChange}
+          required
         />
       </FormGroup>
-      <Button color="primary" outline>
-        Login
-      </Button>
+      <Button color="primary">Login</Button>
     </Form>
   );
 };

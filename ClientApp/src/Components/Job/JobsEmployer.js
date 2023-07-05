@@ -212,10 +212,22 @@ const JobsEmployer = () => {
         </div>
       ) : (
         <div>
-          <h6>Job Listings for {employer?.companyName}</h6>
-          <Button color="primary" onClick={toggleModal} className="m-3">
-            Add Job
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h5 className="p-2">Job Listings for {employer?.companyName}</h5>
+            <Button
+              color="success"
+              onClick={toggleModal}
+              className="m-3 btn-sm"
+            >
+              Add Job
+            </Button>
+          </div>
           {loading ? (
             <Spinner color="primary" />
           ) : jobs?.length > 0 ? (

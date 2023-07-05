@@ -40,10 +40,13 @@ const Skills = () => {
       })
       .catch((error) => console.error(error));
   }, []);
+
   return (
     <Container fluid>
       <div className="p-4">
-        <h4>Here are all the available skills with available jobs:</h4>
+        <h4 className="text-center p-4" style={{ color: "wheat" }}>
+          Available skills with available jobs count
+        </h4>
         {skills === null && <Spinner />}
         {skills && (
           <Card>

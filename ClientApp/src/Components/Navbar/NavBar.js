@@ -16,7 +16,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 const NavBar = () => {
   const { currentUser } = useContext(AuthContext);
 
-  console.log(currentUser);
+  // console.log(currentUser);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -25,9 +25,9 @@ const NavBar = () => {
     <div>
       <Navbar expand="md" container="fluid" color="dark" dark>
         {/* <NavbarBrand> */}
-          <Link to="/home" className="navbar-brand">
-            Job Board
-          </Link>
+        <Link to="/home" className="navbar-brand">
+          Job Board
+        </Link>
         {/* </NavbarBrand> */}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

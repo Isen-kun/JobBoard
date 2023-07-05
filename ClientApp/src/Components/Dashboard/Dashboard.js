@@ -17,6 +17,8 @@ const ApplicantDashboard = ({
   user,
   totalApplications,
   totalSelectedApplications,
+  totalJobsPosted,
+  totalSelectedApplicants,
 }) => {
   const { currentUser, jwtToken } = useContext(AuthContext);
 
@@ -66,10 +68,10 @@ const ApplicantDashboard = ({
 
   return (
     <div className="">
-      <h3>Welcome, {user.name}!</h3>
+      <h3 style={{ color: "wheat" }}>Welcome, {user.name}!</h3>
       <Row>
         <Col md="8">
-          <Card color="info" outline>
+          <Card>
             <CardBody>
               <CardTitle className="text-center">
                 <strong>User Information</strong>
@@ -132,24 +134,24 @@ const ApplicantDashboard = ({
         <Col md="4" className="mt-5">
           <Row className="p-4">
             <Col>
-              <Card color="warning" outline>
+              <Card style={{ color: "yellowgreen" }}>
                 {currentUser.roleName === "applicant" && (
-                  <CardBody>
+                  <CardBody className="text-center">
                     <CardTitle tag="h5" className="p-2">
                       Total Applied Applications
                     </CardTitle>
-                    <CardText className="text-center">
+                    <CardText>
                       <strong>{totalApplications}</strong>
                     </CardText>
                   </CardBody>
                 )}
                 {currentUser.roleName === "employer" && (
-                  <CardBody>
+                  <CardBody className="text-center">
                     <CardTitle tag="h5" className="p-2">
-                      Total Applications posted
+                      Total Jobs posted
                     </CardTitle>
-                    <CardText className="text-center">
-                      <strong>{totalApplications}</strong>
+                    <CardText>
+                      <strong>{totalJobsPosted}</strong>
                     </CardText>
                   </CardBody>
                 )}
@@ -158,24 +160,24 @@ const ApplicantDashboard = ({
           </Row>
           <Row className="p-4">
             <Col>
-              <Card color="success" outline>
+              <Card style={{ color: "green" }}>
                 {currentUser.roleName === "applicant" && (
-                  <CardBody>
+                  <CardBody className="text-center">
                     <CardTitle tag="h5" className="p-2">
-                      Total SelectedApplications
+                      Total Selected Applications
                     </CardTitle>
-                    <CardText className="text-center">
+                    <CardText>
                       <strong>{totalSelectedApplications}</strong>
                     </CardText>
                   </CardBody>
                 )}
                 {currentUser.roleName === "employer" && (
-                  <CardBody>
+                  <CardBody className="text-center">
                     <CardTitle tag="h5" className="p-2">
                       Total Candidates Selected
                     </CardTitle>
-                    <CardText className="text-center">
-                      <strong>{totalSelectedApplications}</strong>
+                    <CardText>
+                      <strong>{totalSelectedApplicants}</strong>
                     </CardText>
                   </CardBody>
                 )}

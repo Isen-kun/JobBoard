@@ -2,7 +2,7 @@ import { Table } from "reactstrap";
 
 const CategoriesTable = ({ categories }) => {
   return (
-    <Table>
+    <Table bordered hover striped>
       <thead>
         <tr>
           <th>#</th>

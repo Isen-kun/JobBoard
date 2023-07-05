@@ -2,7 +2,7 @@ import { Table } from "reactstrap";
 
 const LocationsTable = ({ locations }) => {
   return (
-    <Table>
+    <Table bordered hover striped>
       <thead>
         <tr>
           <th>#</th>

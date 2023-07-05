@@ -10,7 +10,6 @@ const ApplicationsEmployer = () => {
   const [loading, setLoading] = useState(false);
   const [applications, setApplications] = useState([]);
 
-  // Fetch employer data and filter for the current user's employer
   useEffect(() => {
     setLoading(true);
     fetch("api/Employers", {
@@ -133,7 +132,7 @@ const ApplicationsEmployer = () => {
 
   return (
     <div>
-      <h6>Applied applications for the employer</h6>
+      <h5 className="p-2">Applied applications for the employer</h5>
       {loading && <Spinner />}
       {applications.length === 0 && <div>No applications found.</div>}
       {applications.length > 0 && (

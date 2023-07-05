@@ -13,8 +13,10 @@ const Landing = () => {
       <Container>
         <Row className="text-center p-5">
           <Col md={12}>
-            <h1>Welcome to the Job Board💼</h1>
-            <h6>Making Tech Hiring simpler and effective💻</h6>
+            <h1 style={{ color: "white" }}>Welcome to the Job Board💼</h1>
+            <h6 style={{ color: "WhiteSmoke" }}>
+              Making Tech Hiring simpler and effective💻
+            </h6>
           </Col>
         </Row>
 

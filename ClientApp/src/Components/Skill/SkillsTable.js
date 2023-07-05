@@ -2,7 +2,7 @@ import { Table } from "reactstrap";
 
 const SkillsTable = ({ skills }) => {
   return (
-    <Table>
+    <Table bordered hover striped>
       <thead>
         <tr>
           <th>#</th>
